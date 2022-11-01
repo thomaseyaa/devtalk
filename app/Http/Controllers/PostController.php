@@ -96,4 +96,28 @@ class PostController extends Controller
 
         return redirect()->back();
     }
+
+    // Delete a post
+    public function deletePost($id){
+        $post = Post::where('id',$id)->first();
+        
+        if(!$post){
+            return redirect('/');
+        }
+        else if($post->user_id == session('user')->id){
+            if($post->img_id){
+                $api = new \Cloudinary\Uploader();
+                $result = $api->destroy($post->img_id);
+            }
+
+            $likesDelete = Like::where('likeable_id',$id)->delete();
+            $postDelete = Post::where('id',$id)->delete();
+            $posts = Post::orderBy('id', 'desc')->get();
+            $user = session('user');
+            return redirect('/home');
+        }
+        else{
+            return redirect('/');
+        }
+    }
 }
