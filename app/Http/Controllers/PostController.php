@@ -82,21 +82,6 @@ class PostController extends Controller
         return view('post', ['post' => $post]);
     }
 
-    public function likePost(Request $request, $id)
-    {
-        $post =  Post::where('id', $id)->first();
-        if ($post->hasLiked()) {
-            $postLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
-            return redirect('/home');
-        }
-
-        $post->likes()->create([
-            'user_id' => session('user')->id
-        ]);
-
-        return redirect()->back();
-    }
-
     // Delete a post
     public function deletePost($id){
         $post = Post::where('id',$id)->first();
@@ -119,5 +104,21 @@ class PostController extends Controller
         else{
             return redirect('/');
         }
+    }
+
+    // Like a post
+    public function likePost(Request $request, $id)
+    {
+        $post =  Post::where('id', $id)->first();
+        if ($post->hasLiked()) {
+            $postLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
+            return redirect('/home');
+        }
+
+        $post->likes()->create([
+            'user_id' => session('user')->id
+        ]);
+
+        return redirect()->back();
     }
 }

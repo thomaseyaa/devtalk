@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <form action="/comment/{{$p->id}}" method="post">
+                                    <form action="/commentPost/{{$p->id}}" method="post">
                                         @csrf
                                         <textarea class="form-control" name="comment_body" id="" cols="15" rows="5"></textarea>
                                         <button class="btn btn-primary text-white text-primary mb-3 mt-3 w-100" type="submit">Envoyer</button>
