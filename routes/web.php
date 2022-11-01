@@ -23,3 +23,4 @@ Route::middleware('isNotAuth')->get('/login', function () {return view('login');
 Route::middleware('isNotAuth')->post('/login', [authController::class, 'login']);
 Route::middleware('isNotAuth')->get('/register', function () {return view('register');});
 Route::middleware('isNotAuth')->post('/register', [authController::class, 'register']);
+Route::middleware('isAuth')->get('/disconnect', [authController::class, 'disconnect']);
