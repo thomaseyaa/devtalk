@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,5 @@ Route::middleware('isAuth')->get('/disconnect', [authController::class, 'disconn
 
 // Profile routes
 Route::middleware('isAuth')->get('/profile', function () {return view('profile');});
-Route::middleware('isAuth')->get('/profile/{id}', [profileController::class, 'getProfile']);
+Route::middleware('isAuth')->get('/profile/{id}', [ProfileController::class, 'getProfile']);
+Route::middleware('isAuth')->post('/profile', [ProfileController::class, 'updateProfile']);
