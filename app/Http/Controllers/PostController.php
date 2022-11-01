@@ -2,7 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Post;
+use App\Models\User;
+use Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class PostController extends Controller
 {
@@ -65,5 +74,26 @@ class PostController extends Controller
         }
         $user = session('user');
         return view('home', ['posts' => $posts, 'user' => $user, 'users'=> $users]);
+    }
+
+    // Get one post
+    public function getPost($id){
+        $post =  Post::where('id', $id)->get();
+        return view('post', ['post' => $post]);
+    }
+
+    public function likePost(Request $request, $id)
+    {
+        $post =  Post::where('id', $id)->first();
+        if ($post->hasLiked()) {
+            $postLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
+            return redirect('/home');
+        }
+
+        $post->likes()->create([
+            'user_id' => session('user')->id
+        ]);
+
+        return redirect()->back();
     }
 }

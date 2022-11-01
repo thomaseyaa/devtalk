@@ -35,5 +35,6 @@ Route::middleware('isAuth')->post('/deleteprofile', [ProfileController::class, '
 
 // Post routes
 Route::middleware('isAuth')->get('/home', [PostController::class, 'getAllPosts']);
+Route::middleware('isAuth')->get('/post/{id}', [PostsController::class, 'getPost']);
 Route::middleware('isAuth')->post('/home', [PostController::class, 'createPost']);
 Route::middleware('isAuth')->get('/deletePost/{id}', [PostController::class, 'deletePost']);
