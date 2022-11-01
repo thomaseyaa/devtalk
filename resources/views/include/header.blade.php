@@ -3,7 +3,7 @@
     <nav class="py-3 navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand py-0" href="/">
-                <h1 class="text-dark">None</h1>
+                <h1 class="text-dark">DevTalk</h1>
             </a>
             <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav">
@@ -19,7 +19,7 @@
     <nav class="py-3 navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand py-0" href="/">
-                <h1 class="text-dark">None</h1>
+                <h1 class="text-dark">DevTalk</h1>
             </a>
             <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav">

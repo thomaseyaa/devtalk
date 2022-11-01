@@ -28,4 +28,34 @@ class AuthController extends Controller
         ]);
         return redirect('login');
     }
+
+    // Login
+    public function login(Request $request){
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = DB::table('users')->where('email', $request->email)->first();
+       if ($user){
+           if (Hash::check($request->password, $user->password)){
+               session(['user' => $user]);
+               return redirect('home');
+           }
+           else{
+               session()->flash('message', [
+                   'status' => 'danger',
+                   'text' => 'Mauvais identifiant'
+               ]);
+               return redirect('login');
+           }
+       }
+       else{
+           session()->flash('message', [
+               'status' => 'danger',
+               'text' => 'Mauvais identifiant'
+           ]);
+           return redirect('login');
+       }
+    }
 }
