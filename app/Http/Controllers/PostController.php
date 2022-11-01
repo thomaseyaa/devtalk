@@ -121,4 +121,37 @@ class PostController extends Controller
 
         return redirect()->back();
     }
+     
+    // Like a comment
+    public function likeComment(Request $request, $id)
+    {
+        $comment =  Comment::where('id', $id)->first();
+        if ($comment->hasLiked()) {
+            $commentLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
+            return redirect('/home');
+        }
+
+        $comment->likes()->create([
+            'user_id' => session('user')->id
+        ]);
+
+        return redirect()->back();
+    }
+
+    // Comment a post
+    public function commentPost(Request $request, $id){
+        $request->validate([
+            'comment_body' => 'required',
+        ]);
+        $comment = Comment::create([
+            'body' => $request->comment_body,
+            'post_id' => $id,
+            'user_id'=>session('user')->id,
+        ]);
+        $comments = Comment::get();
+        $user = session('user');
+        $users =User::get();
+        $posts = Post::orderBy('id', 'desc')->get();
+        return redirect('/home');
+    }
 }
