@@ -121,4 +121,21 @@ class PostController extends Controller
 
         return redirect()->back();
     }
+     
+    // Comment a post
+    public function commentPost(Request $request, $id){
+        $request->validate([
+            'comment_body' => 'required',
+        ]);
+        $comment = Comment::create([
+            'body' => $request->comment_body,
+            'post_id' => $id,
+            'user_id'=>session('user')->id,
+        ]);
+        $comments = Comment::get();
+        $user = session('user');
+        $users =User::get();
+        $posts = Post::orderBy('id', 'desc')->get();
+        return redirect('/home');
+    }
 }
