@@ -123,4 +123,37 @@ class ProfileController extends Controller
             return redirect('profile');
         }
     }
+
+    // Delete profile
+    public function deleteProfile(){
+        if (session('user')->img_url != null){
+            $api = new \Cloudinary\Uploader();
+            $result = $api->destroy(session('user')->img_id);
+            if (!$result){
+                session()->flash('message', [
+                    'status' => 'danger',
+                    'text' => 'Erreur lors de la suppresion'
+                ]);
+                return redirect('login');
+            }
+        }
+        $deleteUser = DB::table('users')->where('id',session('user')->id)->delete();
+
+        if ($deleteUser){
+            session()->forget('user');
+            session()->flash('message', [
+                'status' => 'success',
+                'text' => 'Compte supprimé'
+            ]);
+            return redirect('login');
+        }
+        else{
+
+            session()->flash('message', [
+                'status' => 'error',
+                'text' => 'Erreur lors de la suppression'
+            ]);
+            return redirect('profile');
+        }
+    }
 }

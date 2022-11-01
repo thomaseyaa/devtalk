@@ -30,3 +30,4 @@ Route::middleware('isAuth')->get('/disconnect', [authController::class, 'disconn
 Route::middleware('isAuth')->get('/profile', function () {return view('profile');});
 Route::middleware('isAuth')->get('/profile/{id}', [ProfileController::class, 'getProfile']);
 Route::middleware('isAuth')->post('/profile', [ProfileController::class, 'updateProfile']);
+Route::middleware('isAuth')->post('/deleteprofile', [ProfileController::class, 'deleteProfile']);
