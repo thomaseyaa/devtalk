@@ -39,4 +39,31 @@ class PostController extends Controller
         $users =User::get();
         return redirect('/home');
     }
+
+    // Get all posts
+    public function getAllPosts(){
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
+        $users = User::get();
+        foreach($posts as $p){
+            $p->publication_date = Carbon::parse($p->created_at)->locale('fr')->diffForHumans();
+            $comments = Comment::where('post_id',$p->id)->orderBy('id', 'desc')->get();
+            if($comments){
+                $p->comments = $comments;
+                foreach($comments as $c){
+                    foreach($users as $u){
+                        if($c->user_id ==  $u->id){
+                            $c->user_name = $u->first_name;
+                            $c->user_image= $u->img_url;
+                            $c->publication_date = Carbon::parse($c->created_at)->locale('fr')->diffForHumans();
+                        }
+                    }
+                }
+            }
+            else{
+                $p->comments= [];
+            }
+        }
+        $user = session('user');
+        return view('home', ['posts' => $posts, 'user' => $user, 'users'=> $users]);
+    }
 }
