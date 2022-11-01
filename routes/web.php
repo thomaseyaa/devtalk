@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,9 @@ Route::middleware('isNotAuth')->post('/login', [authController::class, 'login'])
 Route::middleware('isNotAuth')->get('/register', function () {return view('register');});
 Route::middleware('isNotAuth')->post('/register', [authController::class, 'register']);
 Route::middleware('isAuth')->get('/disconnect', [authController::class, 'disconnect']);
+
+// Profile routes
+Route::middleware('isAuth')->get('/profile', function () {return view('profile');});
+Route::middleware('isAuth')->get('/profile/{id}', [ProfileController::class, 'getProfile']);
+Route::middleware('isAuth')->post('/profile', [ProfileController::class, 'updateProfile']);
+Route::middleware('isAuth')->post('/deleteprofile', [ProfileController::class, 'deleteProfile']);
