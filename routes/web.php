@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,8 @@ Route::middleware('isAuth')->get('/profile', function () {return view('profile')
 Route::middleware('isAuth')->get('/profile/{id}', [ProfileController::class, 'getProfile']);
 Route::middleware('isAuth')->post('/profile', [ProfileController::class, 'updateProfile']);
 Route::middleware('isAuth')->post('/deleteprofile', [ProfileController::class, 'deleteProfile']);
+
+// Post routes
+Route::middleware('isAuth')->get('/home', [PostController::class, 'getAllPosts']);
+Route::middleware('isAuth')->post('/home', [PostController::class, 'createPost']);
+Route::middleware('isAuth')->get('/deletePost/{id}', [PostController::class, 'deletePost']);
