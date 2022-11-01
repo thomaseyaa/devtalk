@@ -24,3 +24,7 @@ Route::middleware('isNotAuth')->post('/login', [authController::class, 'login'])
 Route::middleware('isNotAuth')->get('/register', function () {return view('register');});
 Route::middleware('isNotAuth')->post('/register', [authController::class, 'register']);
 Route::middleware('isAuth')->get('/disconnect', [authController::class, 'disconnect']);
+
+// Profile routes
+Route::middleware('isAuth')->get('/profile', function () {return view('profile');});
+Route::middleware('isAuth')->get('/profile/{id}', [profileController::class, 'getProfile']);
