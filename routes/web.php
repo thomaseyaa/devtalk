@@ -32,9 +32,15 @@ Route::middleware('isAuth')->get('/profile', function () {return view('profile')
 Route::middleware('isAuth')->get('/profile/{id}', [ProfileController::class, 'getProfile']);
 Route::middleware('isAuth')->post('/profile', [ProfileController::class, 'updateProfile']);
 Route::middleware('isAuth')->post('/deleteprofile', [ProfileController::class, 'deleteProfile']);
+Route::middleware('isAuth')->post('/commentPost/{id}', [PostController::class, 'commentPost']);
+Route::middleware('isAuth')->get('/likePost/{id}', [PostController::class, 'likePost']);
+Route::middleware('isAuth')->get('/likeComment/{id}', [PostController::class, 'likeComment']);
 
 // Post routes
 Route::middleware('isAuth')->get('/home', [PostController::class, 'getAllPosts']);
 Route::middleware('isAuth')->get('/post/{id}', [PostsController::class, 'getPost']);
 Route::middleware('isAuth')->post('/home', [PostController::class, 'createPost']);
 Route::middleware('isAuth')->get('/deletePost/{id}', [PostController::class, 'deletePost']);
+
+// Autre
+Route::get('/community-regulations', function () {return view('community-regulations');});
