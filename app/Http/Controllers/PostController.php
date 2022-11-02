@@ -21,31 +21,30 @@ class PostController extends Controller
             'body' => 'required',
             'img' => 'mimes:jpeg,png,jpg',
         ]);
+
         if($request->file('image')){
             $result = \Cloudinary\Uploader::upload($request->file('image'));
-            //$result = $request->file('image')->storeOnCloudinary();
+
             $post = Post::create([
                 'body' => $request->body,
                 'img_id'=>$result['public_id'],
                 'img_url'=> $result['secure_url'],
-                'user_id'=>session('user')->id,
+                'user_id'=> session('user')->id,
             ]);
-            $posts = Post::orderBy('id', 'desc')->get();
-            $user = session('user');
-            $users =User::get();
+
             return redirect('/home');
         }
+
         $post = Post::create([
             'body' => $request->body,
             'user_id'=>session('user')->id,
         ]);
+
         session()->flash('message', [
             'status' => 'success',
             'text' => 'Post publié'
         ]);
-        $posts = Post::orderBy('id', 'desc')->get();
-        $user = session('user');
-        $users =User::get();
+        
         return redirect('/home');
     }
 
@@ -53,32 +52,36 @@ class PostController extends Controller
     public function getAllPosts(){
         $posts = Post::orderBy('id', 'desc')->paginate(5);
         $users = User::get();
-        foreach($posts as $p){
-            $p->publication_date = Carbon::parse($p->created_at)->locale('fr')->diffForHumans();
-            $comments = Comment::where('post_id',$p->id)->orderBy('id', 'desc')->get();
+        foreach($posts as $post){
+            $post->publication_date = Carbon::parse($post->created_at)->locale('fr')->diffForHumans();
+            $comments = Comment::where('post_id',$post->id)->orderBy('id', 'desc')->get();
+            
             if($comments){
-                $p->comments = $comments;
-                foreach($comments as $c){
-                    foreach($users as $u){
-                        if($c->user_id ==  $u->id){
-                            $c->user_name = $u->first_name;
-                            $c->user_image= $u->img_url;
-                            $c->publication_date = Carbon::parse($c->created_at)->locale('fr')->diffForHumans();
+                $post->comments = $comments;
+                foreach($comments as $comment){
+                    foreach($users as $user){
+                        if($comment->user_id ==  $user->id){
+                            $comment->user_name = $user->first_name;
+                            $comment->user_image = $user->img_url;
+                            $comment->publication_date = Carbon::parse($comment->created_at)->locale('fr')->diffForHumans();
                         }
                     }
                 }
             }
             else{
-                $p->comments= [];
+                $post->comments = [];
             }
         }
+
         $user = session('user');
-        return view('home', ['posts' => $posts, 'user' => $user, 'users'=> $users]);
+        
+        return view('home', ['posts' => $posts, 'user' => $user, 'users' => $users]);
     }
 
     // Get one post
     public function getPost($id){
         $post =  Post::where('id', $id)->get();
+
         return view('post', ['post' => $post]);
     }
 
@@ -97,8 +100,7 @@ class PostController extends Controller
 
             $likesDelete = Like::where('likeable_id',$id)->delete();
             $postDelete = Post::where('id',$id)->delete();
-            $posts = Post::orderBy('id', 'desc')->get();
-            $user = session('user');
+            
             return redirect('/home');
         }
         else{
@@ -110,6 +112,7 @@ class PostController extends Controller
     public function likePost(Request $request, $id)
     {
         $post =  Post::where('id', $id)->first();
+
         if ($post->hasLiked()) {
             $postLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
             return redirect('/home');
@@ -121,11 +124,27 @@ class PostController extends Controller
 
         return redirect()->back();
     }
-     
+
+    // Comment a post
+    public function commentPost(Request $request, $id){
+        $request->validate([
+            'comment_body' => 'required',
+        ]);
+
+        $comment = Comment::create([
+            'body' => $request->comment_body,
+            'post_id' => $id,
+            'user_id'=> session('user')->id,
+        ]);
+
+        return redirect('/home');
+    }
+
     // Like a comment
     public function likeComment(Request $request, $id)
     {
         $comment =  Comment::where('id', $id)->first();
+
         if ($comment->hasLiked()) {
             $commentLikeDelete = Like::where('user_id', session('user')->id)->where('likeable_id', $id)->delete();
             return redirect('/home');
@@ -136,22 +155,5 @@ class PostController extends Controller
         ]);
 
         return redirect()->back();
-    }
-
-    // Comment a post
-    public function commentPost(Request $request, $id){
-        $request->validate([
-            'comment_body' => 'required',
-        ]);
-        $comment = Comment::create([
-            'body' => $request->comment_body,
-            'post_id' => $id,
-            'user_id'=>session('user')->id,
-        ]);
-        $comments = Comment::get();
-        $user = session('user');
-        $users =User::get();
-        $posts = Post::orderBy('id', 'desc')->get();
-        return redirect('/home');
     }
 }
