@@ -12,6 +12,7 @@ class ProfileController extends Controller
     // Get profile
     public function getProfile($id){
         $user = DB::table('users')->where('id', $id)->first();
+
         if ($user){
             return view('profile')->with('user', $user);
         }
@@ -41,7 +42,9 @@ class ProfileController extends Controller
                         return redirect('profile');
                     }
                 }
+
                 $result = \Cloudinary\Uploader::upload($request->img);
+
                 DB::table('users')->where('id', session('user')->id)->update([
                     'first_name' => $request->first_name,
                     'email' => $request->email,
@@ -50,30 +53,37 @@ class ProfileController extends Controller
                     'img_url'=> $result['secure_url'],
                     'img_id'=>$result['public_id'],
                 ]);
+
                 $user = DB::table('users')->where('id', session('user')->id)->first();
+
                 session()->flash('message', [
                     'status' => 'success',
                     'text' => 'Profil modifié'
                 ]);
+
                 session()->forget('user');
                 session(['user' => $user]);
+
                 return redirect('profile');
             }
             else{
-
                 DB::table('users')->where('id', session('user')->id)->update([
                     'first_name' => $request->first_name,
                     'email' => $request->email,
                     'bio' => $request->bio,
                     'password' => Hash::make($request->password)
                 ]);
+
                 session()->flash('message', [
                     'status' => 'success',
                     'text' => 'Profil modifié'
                 ]);
+
                 $user = DB::table('users')->where('id', session('user')->id)->first();
+
                 session()->forget('user');
                 session(['user' => $user]);
+                
                 return redirect('profile');
             }
         }
@@ -81,15 +91,19 @@ class ProfileController extends Controller
             if (session('user')->img_url != null){
                 $api = new \Cloudinary\Uploader();
                 $result = $api->destroy(session('user')->img_id);
+
                 if (!$result){
                     session()->flash('message', [
                         'status' => 'danger',
                         'text' => 'Erreur lors de la modifcation'
                     ]);
+
                     return redirect('profile');
                 }
             }
+
             $result = \Cloudinary\Uploader::upload($request->img);
+
             DB::table('users')->where('id', session('user')->id)->update([
                 'first_name' => $request->first_name,
                 'email' => $request->email,
@@ -98,13 +112,17 @@ class ProfileController extends Controller
                 'img_url'=> $result['secure_url'],
                 'img_id'=>$result['public_id'],
             ]);
+
             session()->flash('message', [
                 'status' => 'success',
                 'text' => 'Profil modifié'
             ]);
+
             $user = DB::table('users')->where('id', session('user')->id)->first();
+
             session()->forget('user');
             session(['user' => $user]);
+
             return redirect('profile');
         }
         else{
@@ -113,13 +131,17 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'bio' => $request->bio,
             ]);
+
             session()->flash('message', [
                 'status' => 'success',
                 'text' => 'Profil modifié'
             ]);
+
             $user = DB::table('users')->where('id', session('user')->id)->first();
+
             session()->forget('user');
             session(['user' => $user]);
+
             return redirect('profile');
         }
     }
@@ -129,6 +151,7 @@ class ProfileController extends Controller
         if (session('user')->img_url != null){
             $api = new \Cloudinary\Uploader();
             $result = $api->destroy(session('user')->img_id);
+
             if (!$result){
                 session()->flash('message', [
                     'status' => 'danger',
@@ -137,6 +160,7 @@ class ProfileController extends Controller
                 return redirect('login');
             }
         }
+
         $deleteUser = DB::table('users')->where('id',session('user')->id)->delete();
 
         if ($deleteUser){
@@ -145,14 +169,15 @@ class ProfileController extends Controller
                 'status' => 'success',
                 'text' => 'Compte supprimé'
             ]);
+
             return redirect('login');
         }
         else{
-
             session()->flash('message', [
                 'status' => 'error',
                 'text' => 'Erreur lors de la suppression'
             ]);
+
             return redirect('profile');
         }
     }
