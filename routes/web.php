@@ -43,4 +43,4 @@ Route::middleware('isAuth')->post('/home', [PostController::class, 'createPost']
 Route::middleware('isAuth')->get('/deletePost/{id}', [PostController::class, 'deletePost']);
 
 // Autre
-Route::get('/community-regulations', function () {return view('community-regulations');});
+Route::get('/privacy-policy', function () {return view('privacy-policy');});
