@@ -36,55 +36,21 @@
                                 <h5 class="card-title mb-0">Utilisateurs 👨‍💻</h5>
                             </div>
                             <div class="card-body">
+                                @foreach($users as $userSelected)
                                 <div class="hstack gap-2 mb-3">
                                     <div class="avatar">
-                                        <a href="#!"><img class="avatar-img rounded-circle" src="{{ asset('img/3.jpg') }}" alt=""></a>
+                                        @if($userSelected->img_url == null)
+                                            <a href="profile/{{$userSelected->id}}"><img class="avatar-img rounded-circle" src="{{ asset('img/default.png') }}" alt=""></a>
+                                        @else
+                                            <a href="profile/{{$userSelected->id}}"><img class="avatar-img rounded-circle" src="<?= $userSelected->img_url ?>" alt=""></a>
+                                        @endif
                                     </div>
                                     <div class="overflow-hidden">
-                                        <a class="h6 mb-0" href="#!">Lucas Lubasinski</a>
+                                        <a class="h6 mb-0" href="profile/{{$userSelected->id}}">{{$userSelected->first_name .' '. $userSelected->last_name}}</a>
                                         <p class="mb-0 small text-truncate">Dev 2</p>
                                     </div>
                                 </div>
-
-                                <div class="hstack gap-2 mb-3">
-                                    <div class="avatar">
-                                        <a href="#!"> <img class="avatar-img rounded-circle" src="{{ asset('img/2.jpg') }}" alt=""></a>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <a class="h6 mb-0" href="#!">Amanda Elfassy</a>
-                                        <p class="mb-0 small text-truncate">Dev 3</p>
-                                    </div>
-                                </div>
-
-                                <div class="hstack gap-2 mb-3">
-                                    <div class="avatar">
-                                        <a href="#"><img class="avatar-img rounded-circle" src="{{ asset('img/default.png') }}" alt=""></a>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <a class="h6 mb-0" href="#!">Junior Sanka</a>
-                                        <p class="mb-0 small text-truncate">Dev 1</p>
-                                    </div>
-                                </div>
-
-                                <div class="hstack gap-2 mb-3">
-                                    <div class="avatar">
-                                        <a href="#"> <img class="avatar-img rounded-circle" src="{{ asset('img/1.jpg') }}" alt=""></a>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <a class="h6 mb-0" href="#!">Thomas Bernard</a>
-                                        <p class="mb-0 small text-truncate">Dev 3</p>
-                                    </div>
-                                </div>
-
-                                <div class="hstack gap-2 mb-3">
-                                    <div class="avatar">
-                                        <a href="#"> <img class="avatar-img rounded-circle" src="{{ asset('img/default.png') }}" alt=""></a>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <a class="h6 mb-0" href="#!">Léa Krief</a>
-                                        <p class="mb-0 small text-truncate">Dev 2</p>
-                                    </div>
-                                </div>
+                                @endforeach
 
                                 <div class="d-grid mt-3">
                                     <a class="btn btn-sm btn-primary-soft" href="#!">Voir plus</a>
