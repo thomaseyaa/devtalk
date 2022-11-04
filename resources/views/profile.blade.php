@@ -7,7 +7,6 @@
         <div class="col-lg-6 vstack gap-4">
           <div class="card">
             <div class="h-100px rounded-top" style="background-color: #32C7FF; background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
-              <!-- Card body START -->
               <div class="card-body py-0">
                 <div class="d-sm-flex align-items-start text-center text-sm-start">
                   <div>
@@ -20,13 +19,10 @@
                     </div>
                   </div>
                   <div class="ms-sm-4 mt-sm-3">
-                    <!-- Info -->
                     <h1 class="mb-0 h5">{{ session('user')->first_name }} {{ session('user')->last_name }}</h1>
                     <p class="mb-0">{{ session('user')->email }}</h1>
                   </div>
-                  <!-- Button -->
                 </div>
-                <!-- List profile -->
                 <ul class="list-inline mb-3 text-center text-sm-start mt-3 mt-sm-0">
                   <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Développeur Front-End</li>
                   <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i>Paris</li>
@@ -65,7 +61,7 @@
                   <div class="card-header border-0 pb-0">
                     <h5 class="card-title">Modifier mes informations</h5> 
                   </div>
-                  <div class="card-body px-5 pt-4">
+                  <div class="card-body px-4 pt-4">
                       <div @if(session()->has('message')) class="alert alert-{{session('message')['status']}}">
                           {{ session('message')['text'] }}
                       </div @endif>
@@ -93,30 +89,44 @@
           </div>
         </div>
       @else
-        <div class="col-lg-4 col-md-12 col-sm-12 pt-12">
-          <div class="card rounded-lg overflow-hidden hvr-float mb-4">
-              <div class="card-header bg-white px-5">
-              <div class="d-flex align-items-center">
-                  <span>Profil</span>
-              </div>
-          </div>
-          <div class="card-body px-5">
-            <div class="d-flex justify-content-center">
-                @if($user->img_url != null)
-                    <img class="rounded-circle mr-3 border my-auto" alt="Photo" src="{{ $user->img_url }}" height="100">
-                @else
-                    <img class="rounded-circle mr-3 border my-auto" alt="Photo" src="{{ asset('img/default.png') }}" height="100">
-                @endif
-                <div class="my-auto">
-                    <h1 class="text-dark" href="#">{{ $user->first_name }}</h1>
-                    <span>{{ $user->email }}</span>
-                </div>
-            </div>
-              @if(session('user')->bio != null)
-                  <div class="mt-3">
-                      <p>Bio :  {{ $user->bio }}</p>
+      <div class="col-lg-6 vstack gap-4">
+          <div class="card">
+            <div class="h-100px rounded-top" style="background-color: #32C7FF; background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+              <div class="card-body py-0">
+                <div class="d-sm-flex align-items-start text-center text-sm-start">
+                  <div>
+                    <div class="avatar avatar-xxl mt-n5 mb-3">
+                      @if($user->img_url != null)
+                        <img class="avatar-img rounded-circle border border-white border-3" src="{{ $user->img_url }}" alt="Photo">
+                      @else
+                        <img class="avatar-img rounded-circle border border-white border-3" src="{{ asset('img/default.png') }}" alt="Photo">
+                      @endif
+                    </div>
                   </div>
-              @endif
+                  <div class="ms-sm-4 mt-sm-3">
+                    <h1 class="mb-0 h5">{{ $user->first_name }} {{ $user->last_name }}</h1>
+                    <p class="mb-0">{{ $user->email }}</h1>
+                  </div>
+                </div>
+                <ul class="list-inline mb-3 text-center text-sm-start mt-3 mt-sm-0">
+                  <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Développeur Front-End</li>
+                  <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i>Paris</li>
+                </ul>
+              </div>
+            </div>
+    
+            <div class="card">
+              <div class="card-header border-0 pb-0">
+                <h5 class="card-title">À propos</h5> 
+              </div>
+              <div class="card-body">
+                @if($user->bio != null)
+                  <p>{{ $user->bio }}</p>
+                @else
+                  <p>Aucune bio</p>
+                @endif
+              </div>
+            </div>
           </div>
         </div>
       @endif
