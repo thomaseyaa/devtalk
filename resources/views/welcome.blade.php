@@ -1,19 +1,20 @@
 @extends('layout.default')
 
 @section('content')
-    <div class="border-bottom">
-        <div class="container d-flex flex-column" style="min-height: 46rem">
-            <div class="row pt-16">
-                <div class="col  pb-6 pt-lg-8 pb-lg-0">
+    <div class="pt-5 border-bottom">
+        <div class="pt-5 container d-flex flex-column" style="min-height: 46rem">
+            <div class="pt-5 row">
+                <div class="col pb-6 pt-lg-8 pb-lg-0">
                     <h1 class="display-2 text-primary mb-2">DevTalk</h1>
-                    <h1 class="mb-2">Lorem ipsum dolor</h1>
-                    <p class="lead mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae labo.</p>
+                    <h1 class="mb-2">Webstart Dev Community</h1>
+                    <p class="lead mb-5">Rejoins-nous et partagent tes connaissances sur le Développement Web & Mobile. Apprend et cultive toi dans la bonne humeur.
+                    </p>
                     <div class="mb-5">
                         @if(!session('user'))
-                        <a class="text-white" href="/login"><button class="btn btn-primary text-white" type="submit">Connexion</button></a>
-                        <a class="text-white" href="/register"><button class="btn btn-secondary text-white" type="submit">Inscription</button></a>
+                        <a class="text-white" href="/login"><button class="btn btn-lg btn-primary me-2" type="submit">Connexion</button></a>
+                        <a class="text-white" href="/register"><button class="btn btn-lg btn-secondary" type="submit">Inscription</button></a>
                         @else
-                            <a class="text-white" href="/home"><button class="btn btn-primary text-white" type="submit">Voir l'actualité</button></a>
+                            <a class="text-white" href="/home"><button class="btn btn-lg btn-primary" type="submit">Voir l'actualité</button></a>
                         @endif
                     </div>
                 </div>
