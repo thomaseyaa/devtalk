@@ -9,7 +9,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item mx-1"><a class="nav-link text-dark" href="/home">Accueil</a></li>
                     <li class="nav-item mx-1"><a  href="{{ url('profile') }}" class="nav-link text-dark">Profil</a></li>
-                    <li class="nav-item mx-1"><a class="nav-link text-dark" href="/legal-notice">Mentions légales</a></li>
+                    <li class="nav-item mx-1"><a class="nav-link text-dark" href="/privacy-policy">Politiuqe de confidentialité</a></li>
                     <li class="nav-item mx-1"><a href="{{ url('disconnect') }}" class="nav-link text-dark">Déconnexion</a></li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
                     <li class="nav-item mx-1"><a class="nav-link text-dark" href="/">Accueil</a></li>
                     <li class="nav-item mx-1"><a  href="{{ url('login') }}" class="nav-link text-dark">Connexion</a></li>
                     <li class="nav-item mx-1"><a  href="{{ url('register') }}" class="nav-link text-dark">Inscription</a></li>
-                    <li class="nav-item mx-1"><a class="nav-link text-dark" href="/legal-notice">Mentions légales</a></li>
+                    <li class="nav-item mx-1"><a class="nav-link text-dark" href="/privacy-policy">Politiuqe de confidentialité</a></li>
                 </ul>
             </div>
         </div>

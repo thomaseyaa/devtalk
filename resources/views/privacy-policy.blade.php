@@ -16,9 +16,6 @@
                         
                         <h5>Services</h5>
                         <p>Donec tempor porttitor gravida. Nulla turpis lectus, pretium vel sagittis sed, vehicula vel magna. Praesent bibendum consectetur nulla, eu scelerisque ex hendrerit at. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="alert alert-warning" role="alert">
-                        Mauris at justo elit. In placerat odio ullamcorper nisi vehicula, et luctus elit volutpat.
-                        </div>
                         <p>Curabitur ut augue non purus sodales dictum id nec tellus. Fusce purus nisi, scelerisque id nibh at, congue tempor tellus. Praesent et dui sed felis auctor imperdiet nec vitae justo. </p>
 
                         <hr class="mt-2 mb-4">
